@@ -1,0 +1,54 @@
+{
+  "_from": "@mdi/font@^6.1.95",
+  "_id": "@mdi/font@6.1.95",
+  "_inBundle": false,
+  "_integrity": "sha512-L3cg9qoUEp5MZHvu6rtuobTtPBmq0ATau5ZrHmsaE6gCRs90T4JBWyzV8WCMEjZoy5+zA+/cvtCUtD/+WVaQ9Q==",
+  "_location": "/@mdi/font",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@mdi/font@^6.1.95",
+    "name": "@mdi/font",
+    "escapedName": "@mdi%2ffont",
+    "scope": "@mdi",
+    "rawSpec": "^6.1.95",
+    "saveSpec": null,
+    "fetchSpec": "^6.1.95"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@mdi/font/-/font-6.1.95.tgz",
+  "_shasum": "665b7dc13b2d1d1ebefcfac5a68c1013581aaa96",
+  "_spec": "@mdi/font@^6.1.95",
+  "_where": "/Users/suhailkc/Projects/tf/ui-laravel/template/demo3",
+  "author": {
+    "name": "Austin Andrews",
+    "url": "http://twitter.com/templarian"
+  },
+  "bugs": {
+    "url": "https://github.com/Templarian/MaterialDesign/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Dist for Material Design Webfont. This includes the Stock and Community icons in a single webfont collection.",
+  "homepage": "https://materialdesignicons.com",
+  "keywords": [
+    "material",
+    "design",
+    "icons",
+    "webfont"
+  ],
+  "license": "Apache-2.0",
+  "name": "@mdi/font",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Templarian/MaterialDesign-Webfont.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "style": "css/materialdesignicons.css",
+  "version": "6.1.95"
+}
