@@ -25,12 +25,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::extend('unique_nis', function ($attribute, $value, $parameters, $validator) {
+        Validator::extend('unique_nipt', function ($attribute, $value, $parameters, $validator) {
             $fileContent = Storage::disk('local')->exists('data.txt') ? Storage::disk('local')->get('data.txt') : '[]';
             $data = json_decode($fileContent, true);
 
             foreach ($data as $item) {
-                if ($item['nis'] === $value) {
+                if ($item['nipt'] === $value) {
                     return false;
                 }
             }

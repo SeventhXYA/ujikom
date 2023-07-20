@@ -2,7 +2,7 @@
     <nav class="navbar top-navbar">
         <div class="container">
             <div class="navbar-content">
-                <a href="#" class="navbar-brand">
+                <a href="/" class="navbar-brand">
                     Junior<span> Web Programmer</span>
                 </a>
             </div>

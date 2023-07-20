@@ -9,7 +9,7 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
         <div>
-            <h4 class="mb-3 mb-md-0">Welcome to Dashboard</h4>
+            <h4 class="mb-3 mb-md-0">Data Akreditasi Perguruan Tinggi</h4>
         </div>
     </div>
     <div class="row">
@@ -22,7 +22,7 @@
                             <div class="row mb-3">
                                 <div class="col-lg-7">
                                     <input class="form-control" maxlength="255" name="keyword" id="keyword" type="text"
-                                        autocomplete="off" placeholder="nis atau nama">
+                                        autocomplete="off" placeholder="nip atau nama pt">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-icon-text" style="width: 6rem"><i
                                         data-feather="search" class="icon-sm"></i></button>
@@ -44,31 +44,33 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th style="width:1rem;">Nomor Induk</th>
-                                            <th>Nama</th>
-                                            <th style="width:1rem;">Nilai Angka</th>
-                                            <th style="width:1rem;">Nilai Huruf</th>
+                                            <th style="width:1rem;">NIPT</th>
+                                            <th>Perguruan Tinggi</th>
+                                            <th style="width:1rem;">Nilai Akreditasi</th>
+                                            <th style="width:1rem;">Peringkat</th>
+                                            <th style="width:1rem;">Tanggal Akreditasi</th>
                                             <th style="width:1rem;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($filteredData as $item)
                                             <tr>
-                                                <td>{{ $item['nis'] }}</td>
-                                                <td>{{ $item['nama'] }}</td>
-                                                @if ($item['nilai'])
-                                                    <td class="text-center">{{ $item['nilai'] }}</td>
-                                                    <td class="text-center">{{ $item['huruf'] }}</td>
+                                                <td>{{ $item['nipt'] }}</td>
+                                                <td>{{ $item['pt'] }}</td>
+                                                @if ($item['akreditasi'])
+                                                    <td class="text-center">{{ $item['akreditasi'] }}</td>
+                                                    <td class="text-center">{{ $item['peringkat'] }}</td>
+                                                    <td class="text-center">{{ $item['created_at'] }}</td>
                                                 @else
                                                     <td class="text-center">
                                                         <button type="button"
                                                             class="btn btn-outline-primary btn-icon btn-xs"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#addNilai-{{ $item['nis'] }}"><i
+                                                            data-bs-target="#addakreditasi-{{ $item['nipt'] }}"><i
                                                                 data-feather="plus" class="icon-sm"></i>
                                                         </button>
                                                     </td>
-                                                    <div class="modal fade" id="addNilai-{{ $item['nis'] }}" tabindex="-1"
+                                                    <div class="modal fade" id="addakreditasi-{{ $item['nipt'] }}" tabindex="-1"
                                                         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-scrollable">
                                                             <div class="modal-content">
@@ -81,32 +83,31 @@
                                                                         aria-label="btn-close"></button>
                                                                 </div>
                                                                 <form
-                                                                    action="{{ route('data.update', ['nis' => $item['nis']]) }}"
+                                                                    action="{{ route('data.update', ['nipt' => $item['nipt']]) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     <div class="modal-body">
                                                                         <span class="badge bg-primary card-title">
-                                                                            <h6>Tambah Nilai</h6>
+                                                                            <h6>Tambah Akreditasi</h6>
                                                                         </span>
                                                                         <div class="col mb-3">
-                                                                            <label class="form-label fw-bold">NIS</label>
+                                                                            <label class="form-label fw-bold">NIPT</label>
                                                                             <input type="text" class="form-control"
-                                                                                name="nis" value="{{ $item['nis'] }}"
+                                                                                name="nipt" value="{{ $item['nipt'] }}"
                                                                                 autocomplete="off" required readonly
                                                                                 style="background-color: #f5f5f5" />
                                                                         </div>
                                                                         <div class="col mb-3">
-                                                                            <label class="form-label fw-bold">Nama</label>
+                                                                            <label class="form-label fw-bold">Perguruan Tinggi</label>
                                                                             <input type="text" class="form-control"
-                                                                                name="nama" value="{{ $item['nama'] }}"
+                                                                                name="pt" value="{{ $item['pt'] }}"
                                                                                 autocomplete="off" required readonly
                                                                                 style="background-color: #f5f5f5" />
                                                                         </div>
                                                                         <div class="col mb-3">
-                                                                            <label class="form-label fw-bold">Nilai
-                                                                                Akhir</label>
+                                                                            <label class="form-label fw-bold">Nilai Akreditasi</label>
                                                                             <input type="text" class="form-control"
-                                                                                name="nilai" autocomplete="off"
+                                                                                name="akreditasi" autocomplete="off"
                                                                                 required />
                                                                         </div>
                                                                     </div>
@@ -123,15 +124,17 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <td class="text-center">Tidak Ada Data</td>
+                                                    <td class="text-center">-</td>
+                                                    <td class="text-center">-</td>
+                                                    <td class="text-center">-</td>
                                                 @endif
                                                 <td class="d-flex inline">
                                                     <button type="button" class="btn btn-outline-warning btn-icon btn-xs"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#editData-{{ $item['nis'] }}"><i
+                                                        data-bs-target="#editData-{{ $item['nipt'] }}"><i
                                                             data-feather="edit" class="icon-sm"></i>
                                                     </button>
-                                                    <div class="modal fade" id="editData-{{ $item['nis'] }}"
+                                                    <div class="modal fade" id="editData-{{ $item['nipt'] }}"
                                                         tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-scrollable">
@@ -145,7 +148,7 @@
                                                                         aria-label="btn-close"></button>
                                                                 </div>
                                                                 <form
-                                                                    action="{{ route('data.update', ['nis' => $item['nis']]) }}"
+                                                                    action="{{ route('data.update', ['nipt' => $item['nipt']]) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     <div class="modal-body">
@@ -153,26 +156,25 @@
                                                                             <h6>Ubah Data</h6>
                                                                         </span>
                                                                         <div class="col mb-3">
-                                                                            <label class="form-label fw-bold">NIS</label>
+                                                                            <label class="form-label fw-bold">NIPT</label>
                                                                             <input type="text" class="form-control"
-                                                                                name="nis"
-                                                                                value="{{ $item['nis'] }}"
+                                                                                name="nipt"
+                                                                                value="{{ $item['nipt'] }}"
                                                                                 autocomplete="off" required />
                                                                         </div>
                                                                         <div class="col mb-3">
-                                                                            <label class="form-label fw-bold">Nama</label>
+                                                                            <label class="form-label fw-bold">Perguruan Tinggi</label>
                                                                             <input type="text" class="form-control"
-                                                                                name="nama"
-                                                                                value="{{ $item['nama'] }}"
+                                                                                name="pt"
+                                                                                value="{{ $item['pt'] }}"
                                                                                 autocomplete="off" required />
                                                                         </div>
-                                                                        @if ($item['nilai'])
+                                                                        @if ($item['akreditasi'])
                                                                             <div class="col mb-3">
-                                                                                <label class="form-label fw-bold">Nilai
-                                                                                    Akhir</label>
+                                                                                <label class="form-label fw-bold">Nilai Akreditasi</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="nilai"
-                                                                                    value="{{ $item['nilai'] }}"
+                                                                                    name="akreditasi"
+                                                                                    value="{{ $item['akreditasi'] }}"
                                                                                     autocomplete="off" required />
                                                                             </div>
                                                                         @endif
@@ -191,7 +193,7 @@
                                                         </div>
                                                     </div>
                                                     <form name="delete"
-                                                        action="{{ route('data.delete', ['nis' => $item['nis']]) }}"
+                                                        action="{{ route('data.delete', ['nipt' => $item['nipt']]) }}"
                                                         method="POST">
                                                         @method('delete')
                                                         @csrf
@@ -212,10 +214,11 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th style="width:1rem;">Nomor Induk</th>
-                                            <th>Nama</th>
-                                            <th style="width:1rem;">Nilai Angka</th>
-                                            <th style="width:1rem;">Nilai Huruf</th>
+                                            <th style="width:1rem;">NIPT</th>
+                                            <th>Perguruan Tinggi</th>
+                                            <th style="width:1rem;">Nilai Akreditasi</th>
+                                            <th style="width:1rem;">Peringkat</th>
+                                            <th style="width:1rem;">Tanggal Akreditasi</th>
                                             <th style="width:1rem;">Aksi</th>
                                         </tr>
                                     </thead>
@@ -223,21 +226,22 @@
                                         @if ($data)
                                             @foreach ($data as $item)
                                                 <tr>
-                                                    <td>{{ $item['nis'] }}</td>
-                                                    <td>{{ $item['nama'] }}</td>
-                                                    @if ($item['nilai'])
-                                                        <td class="text-center">{{ $item['nilai'] }}</td>
-                                                        <td class="text-center">{{ $item['huruf'] }}</td>
+                                                    <td>{{ $item['nipt'] }}</td>
+                                                    <td>{{ $item['pt'] }}</td>
+                                                    @if ($item['akreditasi'])
+                                                        <td class="text-center">{{ $item['akreditasi'] }}</td>
+                                                        <td class="text-center">{{ $item['peringkat'] }}</td>
+                                                        <td class="text-center">{{ $item['created_at'] }}</td>
                                                     @else
                                                         <td class="text-center">
                                                             <button type="button"
                                                                 class="btn btn-outline-primary btn-icon btn-xs"
                                                                 data-bs-toggle="modal"
-                                                                data-bs-target="#addNilai-{{ $item['nis'] }}"><i
+                                                                data-bs-target="#addakreditasi-{{ $item['nipt'] }}"><i
                                                                     data-feather="plus" class="icon-sm"></i>
                                                             </button>
                                                         </td>
-                                                        <div class="modal fade" id="addNilai-{{ $item['nis'] }}"
+                                                        <div class="modal fade" id="addakreditasi-{{ $item['nipt'] }}"
                                                             tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-scrollable">
@@ -251,36 +255,35 @@
                                                                             aria-label="btn-close"></button>
                                                                     </div>
                                                                     <form
-                                                                        action="{{ route('data.update', ['nis' => $item['nis']]) }}"
+                                                                        action="{{ route('data.update', ['nipt' => $item['nipt']]) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         <div class="modal-body">
                                                                             <span class="badge bg-primary card-title">
-                                                                                <h6>Tambah Nilai</h6>
+                                                                                <h6>Tambah Akreditasi</h6>
                                                                             </span>
                                                                             <div class="col mb-3">
                                                                                 <label
-                                                                                    class="form-label fw-bold">NIS</label>
+                                                                                    class="form-label fw-bold">NIPT</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="nis"
-                                                                                    value="{{ $item['nis'] }}"
+                                                                                    name="nipt"
+                                                                                    value="{{ $item['nipt'] }}"
                                                                                     autocomplete="off" required readonly
                                                                                     style="background-color: #f5f5f5" />
                                                                             </div>
                                                                             <div class="col mb-3">
                                                                                 <label
-                                                                                    class="form-label fw-bold">Nama</label>
+                                                                                    class="form-label fw-bold">Perguruan Tinggi</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="nama"
-                                                                                    value="{{ $item['nama'] }}"
+                                                                                    name="pt"
+                                                                                    value="{{ $item['pt'] }}"
                                                                                     autocomplete="off" required readonly
                                                                                     style="background-color: #f5f5f5" />
                                                                             </div>
                                                                             <div class="col mb-3">
-                                                                                <label class="form-label fw-bold">Nilai
-                                                                                    Akhir</label>
+                                                                                <label class="form-label fw-bold">Nilai Akreditasi</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="nilai" autocomplete="off"
+                                                                                    name="akreditasi" autocomplete="off"
                                                                                     required />
                                                                             </div>
                                                                         </div>
@@ -298,16 +301,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <td class="text-center">Tidak Ada Data</td>
+                                                        <td class="text-center">-</td>
+                                                        <td class="text-center">-</td>
                                                     @endif
                                                     <td class="d-flex inline">
                                                         <button type="button"
                                                             class="btn btn-outline-warning btn-icon btn-xs"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#editData-{{ $item['nis'] }}"><i
+                                                            data-bs-target="#editData-{{ $item['nipt'] }}"><i
                                                                 data-feather="edit" class="icon-sm"></i>
                                                         </button>
-                                                        <div class="modal fade" id="editData-{{ $item['nis'] }}"
+                                                        <div class="modal fade" id="editData-{{ $item['nipt'] }}"
                                                             tabindex="-1" aria-labelledby="exampleModalScrollableTitle"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-scrollable">
@@ -321,7 +325,7 @@
                                                                             aria-label="btn-close"></button>
                                                                     </div>
                                                                     <form
-                                                                        action="{{ route('data.update', ['nis' => $item['nis']]) }}"
+                                                                        action="{{ route('data.update', ['nipt' => $item['nipt']]) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         <div class="modal-body">
@@ -330,28 +334,27 @@
                                                                             </span>
                                                                             <div class="col mb-3">
                                                                                 <label
-                                                                                    class="form-label fw-bold">NIS</label>
+                                                                                    class="form-label fw-bold">NIPT</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="nis"
-                                                                                    value="{{ $item['nis'] }}"
+                                                                                    name="nipt"
+                                                                                    value="{{ $item['nipt'] }}"
                                                                                     autocomplete="off" required />
                                                                             </div>
                                                                             <div class="col mb-3">
                                                                                 <label
-                                                                                    class="form-label fw-bold">Nama</label>
+                                                                                    class="form-label fw-bold">Perguruan Tinggi</label>
                                                                                 <input type="text" class="form-control"
-                                                                                    name="nama"
-                                                                                    value="{{ $item['nama'] }}"
+                                                                                    name="pt"
+                                                                                    value="{{ $item['pt'] }}"
                                                                                     autocomplete="off" required />
                                                                             </div>
-                                                                            @if ($item['nilai'])
+                                                                            @if ($item['akreditasi'])
                                                                                 <div class="col mb-3">
-                                                                                    <label class="form-label fw-bold">Nilai
-                                                                                        Akhir</label>
+                                                                                    <label class="form-label fw-bold">Nilai Akreditasi</label>
                                                                                     <input type="text"
                                                                                         class="form-control"
-                                                                                        name="nilai"
-                                                                                        value="{{ $item['nilai'] }}"
+                                                                                        name="akreditasi"
+                                                                                        value="{{ $item['akreditasi'] }}"
                                                                                         autocomplete="off" required />
                                                                                 </div>
                                                                             @endif
@@ -371,7 +374,7 @@
                                                             </div>
                                                         </div>
                                                         <form name="delete"
-                                                            action="{{ route('data.delete', ['nis' => $item['nis']]) }}"
+                                                            action="{{ route('data.delete', ['nipt' => $item['nipt']]) }}"
                                                             method="POST">
                                                             @method('delete')
                                                             @csrf
@@ -401,35 +404,35 @@
             <div class="card">
                 <div class="card-body">
                     <span class="badge bg-primary card-title">
-                        <h6>Tambah Siswa</h6>
+                        <h6>Tambah Perguruan Tinggi</h6>
                     </span>
                     <form action="{{ route('store.data') }}" method="POST">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-lg-3">
-                                <label for="defaultconfig" class="col-form-label">NIS</label>
+                                <label for="defaultconfig" class="col-form-label">NIPT</label>
                             </div>
                             <div class="col-lg-9">
-                                <input class="form-control" maxlength="255" name="nis" id="nis"
-                                    type="text" autocomplete="off" value="{{ old('nis') }}">
-                                @error('nis')
+                                <input class="form-control" maxlength="255" name="nipt" id="nipt"
+                                    type="text" autocomplete="off" value="{{ old('nipt') }}">
+                                @error('nipt')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-3">
-                                <label for="defaultconfig" class="col-form-label">Nama</label>
+                                <label for="defaultconfig" class="col-form-label">Perguruan Tinggi</label>
                             </div>
                             <div class="col-lg-9">
-                                <input class="form-control" maxlength="255" name="nama" id="nama"
-                                    type="text" autocomplete="off">
+                                <input class="form-control" maxlength="255" name="pt" id="pt"
+                                    type="text" autocomplete="off" value="{{ old('pt') }}">
                             </div>
                         </div>
                         <div class="my-2 d-flex justify-content-end">
-                            <input class="form-control" maxlength="255" name="nilai" id="nilai" value=""
+                            <input class="form-control" maxlength="255" name="akreditasi" id="akreditasi" value=""
                                 type="hidden" autocomplete="off">
-                            <input class="form-control" maxlength="255" name="huruf" id="huruf" value=""
+                            <input class="form-control" maxlength="255" name="peringkat" id="peringkat" value=""
                                 type="hidden" autocomplete="off">
                             <button type="submit" class="btn btn-primary" style="width: 6rem">Tambah</button>
                         </div>
@@ -440,7 +443,10 @@
             <div class="card mt-4">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline">
-                        <h6 class="card-title mb-0">Nilai Siswa</h6>
+                    <span class="badge bg-primary card-title">
+                        <h6>Akreditasi Perguruan Tinggi</h6>
+                    </span>
+                        <!-- <h6 class="card-title mb-0">akreditasi Siswa</h6> -->
                     </div>
                     <div class="row mt-2">
                         <canvas id="chartjsBar"></canvas>
@@ -524,36 +530,24 @@
             .then(data => {
                 var chartLabels = [
                     "A",
-                    "B+",
                     "B",
-                    "C+",
                     "C",
-                    "D+",
-                    "D",
-                    "E",
+                    "TT",
                 ];
 
-                var siswaPerLabel = new Array(chartLabels.length).fill(0);
+                var ptPerLabel = new Array(chartLabels.length).fill(0);
 
                 // Process the fetched data
                 data.forEach(item => {
-                    var nilai = parseFloat(item.nilai);
-                    if (80 <= nilai && nilai <= 100) {
-                        siswaPerLabel[0]++;
-                    } else if (75 <= nilai && nilai <= 80) {
-                        siswaPerLabel[1]++;
-                    } else if (70 <= nilai && nilai <= 75) {
-                        siswaPerLabel[2]++;
-                    } else if (65 <= nilai && nilai <= 70) {
-                        siswaPerLabel[3]++;
-                    } else if (60 <= nilai && nilai <= 65) {
-                        siswaPerLabel[4]++;
-                    } else if (55 <= nilai && nilai <= 60) {
-                        siswaPerLabel[5]++;
-                    } else if (50 <= nilai && nilai <= 55) {
-                        siswaPerLabel[6]++;
-                    } else if (0 <= nilai && nilai <= 50) {
-                        siswaPerLabel[7]++;
+                    var akreditasi = parseFloat(item.akreditasi);
+                    if (361 <= akreditasi && akreditasi <= 400) {
+                        ptPerLabel[0]++;
+                    } else if (301 <= akreditasi && akreditasi <= 360) {
+                        ptPerLabel[1]++;
+                    } else if (200 <= akreditasi && akreditasi <= 300) {
+                        ptPerLabel[2]++;
+                    } else if (200 > akreditasi) {
+                        ptPerLabel[3]++;
                     }
                 });
 
@@ -573,7 +567,7 @@
                                 colors.light,
                                 colors.dark,
                             ],
-                            data: siswaPerLabel,
+                            data: ptPerLabel,
                         }],
                     },
                     options: {
